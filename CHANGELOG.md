@@ -1,3 +1,3 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+[30.12.2023] release the project.
