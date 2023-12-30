@@ -1,7 +1,9 @@
 name: internal_http_server
 description: "An internal http server for flutter"
-version: 0.0.1
+version: 0.0.3
 homepage: https://www.coderblog.in
+repository: https://github.com/coderblog-winson/internal_http_server
+issue_tracker: https://github.com/coderblog-winson/internal_http_server/issues
 
 environment:
   sdk: ">=3.2.3 <4.0.0"

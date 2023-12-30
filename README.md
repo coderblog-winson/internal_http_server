@@ -18,9 +18,9 @@ Not support to create nesting sub folders.
 
 # The demo screen capture
 
-![Web Server](screen_capture/webserver_screen.png)
+![Web Server](https://github.com/coderblog-winson/internal_http_server/blob/main/screen_capture/webserver_screen.png)
 
-![App](screen_capture/phone_screen.png)
+![App](https://github.com/coderblog-winson/internal_http_server/blob/main/screen_capture/phone_screen.png)
 
 # How to use 
 

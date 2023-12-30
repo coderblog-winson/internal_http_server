@@ -115,10 +115,11 @@ packages:
   internal_http_server:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.0.1"
+      name: internal_http_server
+      sha256: acd1f55bdbccb2888d99e651be211428b9073b31f91da6707121d1549aad5a68
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   lints:
     dependency: transitive
     description:

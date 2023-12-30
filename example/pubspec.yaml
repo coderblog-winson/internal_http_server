@@ -30,8 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  internal_http_server:
-    path: ../
+  internal_http_server: ^0.0.2
+  # internal_http_server:
+  #   path: ../
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

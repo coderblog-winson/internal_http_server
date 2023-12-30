@@ -29,7 +29,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:async/async.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -186,89 +185,6 @@ class InternalHttpServer {
     return (await f.readAsBytes()).buffer.asByteData();
   }
 
-  _handleFileUpload(HttpRequest request) async {
-    //debugPrint('upload file==============');
-    if (request.headers.contentType?.mimeType == 'multipart/form-data') {
-      try {
-        // Map<String, dynamic> jsonData = await _getParameters(request);
-        // String directoryName = jsonData['path'];
-        // debugPrint('directoryName: $directoryName');
-
-        final transformer = MimeMultipartTransformer(
-            request.headers.contentType!.parameters['boundary']!);
-        var bodyStream = transformer.bind(request);
-        var savePath = '';
-
-        // process the form fields
-        await for (var part in bodyStream) {
-          var header = part.headers['content-disposition'];
-          var isFile = header!.toLowerCase().indexOf('filename=') > 0;
-
-          if (isFile) {
-            var filename = header.split('filename=')[1].replaceAll('"', '');
-            var fileBytes =
-                await part.fold<List<int>>(<int>[], (b, d) => b..addAll(d));
-
-            final appDocDir = await getApplicationDocumentsDirectory();
-            String subdirectoryPath = appDocDir.path;
-            if (savePath != '') {
-              subdirectoryPath += savePath;
-            }
-            //debugPrint('subdirectoryPath: $subdirectoryPath');
-
-            final file = File(p.join(subdirectoryPath, filename));
-
-            file.writeAsBytesSync(fileBytes);
-          } else {
-            savePath = await utf8.decodeStream(part);
-          }
-        }
-
-        // request.response.statusCode = HttpStatus.ok;
-        // request.response.write('File uploaded successfully');
-
-        final response = {
-          'message': 'File uploaded successfully',
-        };
-
-        request.response
-          ..statusCode = HttpStatus.ok
-          ..headers.contentType = ContentType.json
-          ..write(json.encode(response))
-          ..close();
-      } catch (e) {
-        debugPrint('Error handling file upload: $e');
-        // request.response.statusCode = HttpStatus.internalServerError;
-        // request.response.write('Error handling file upload');
-
-        final response = {
-          'message': 'Error handling file upload',
-        };
-
-        request.response
-          ..statusCode = HttpStatus.internalServerError
-          ..headers.contentType = ContentType.json
-          ..write(json.encode(response))
-          ..close();
-      }
-    } else {
-      // request.response.statusCode = HttpStatus.badRequest;
-      // request.response.write('Invalid content type');
-
-      final response = {
-        'message': 'Invalid content type',
-      };
-
-      request.response
-        ..statusCode = HttpStatus.badRequest
-        ..headers.contentType = ContentType.json
-        ..write(json.encode(response))
-        ..close();
-    }
-
-    await request.response.close();
-  }
-
   _startUpload(HttpRequest request) async {
     debugPrint('start upload file==============');
     //init the file object
@@ -279,11 +195,10 @@ class InternalHttpServer {
     final appDocDir = await getApplicationDocumentsDirectory();
     String subdirectoryPath = appDocDir.path;
     if (savePath != '') {
-      subdirectoryPath += '/' + savePath;
+      subdirectoryPath += '/$savePath';
     }
 
     uploadFile = File(p.join(subdirectoryPath, fileName)).openWrite();
-    print('init upload file');
   }
 
   _handleFileUploading(HttpRequest request) async {
@@ -330,10 +245,6 @@ class InternalHttpServer {
 
     isFirstPart = true;
 
-    Map<String, dynamic> jsonData = await _getParameters(request);
-    String fileName = jsonData['name'];
-    // print('file name:$fileName');
-
     final response = {
       'message': 'File uploaded done',
     };
@@ -366,7 +277,7 @@ class InternalHttpServer {
 
     Map<String, dynamic> jsonData = await _getParameters(request);
     String directoryName = jsonData['path'];
-    print('directoryName:$directoryName');
+    // print('directoryName:$directoryName');
 
     Directory appDocDir = await getApplicationDocumentsDirectory();
     // if (uploadRootDir == null) {
@@ -406,7 +317,7 @@ class InternalHttpServer {
           documentsDirectory.listSync().whereType<File>().toList();
       for (var file in files) {
         var fileName = basename(file.path);
-        print('filename: $fileName');
+        // print('filename: $fileName');
         var item = FileModel(
             fileName: fileName,
             path: '/${file.path.replaceAll('${appDocDir.path}/', '')}',
