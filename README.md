@@ -18,10 +18,10 @@ Not support to create nesting sub folders.
 
 # The demo screen capture
 
-![Web Server](https://github.com/coderblog-winson/internal_http_server/blob/main/screen_capture/webserver_screen.png)
+![Web Server](https://github.com/coderblog-winson/internal_http_server/raw/main/screen_capture/webserver_screen.png)
 
 <a href="#screenshots">
-  <img src="https://github.com/coderblog-winson/internal_http_server/blob/main/screen_capture/phone_screen.png" width="300px">
+  <img src="https://github.com/coderblog-winson/internal_http_server/raw/main/screen_capture/phone_screen.png" width="300px">
 </a>&nbsp;&nbsp;
 
 # How to use 
